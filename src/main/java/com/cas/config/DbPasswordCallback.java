@@ -12,12 +12,17 @@ import java.util.Properties;
  * @author: xianglong[1391086179@qq.com]
  * @date: 上午10:50 2021/3/15
  * @version: V1.0
- * @review:
+ * @review: 环境：application.yaml
  */
 @Slf4j
 @Component
 public class DbPasswordCallback extends DruidPasswordCallback {
 
+    /**
+     * 需要配合配置里面的password-callback-class-name: com.cas.config.DbPasswordCallback 一起使用
+     *【多数据源暂时没有实现密码加密】
+     * @param properties
+     */
     @Override
     public void setProperties(Properties properties) {
         super.setProperties(properties);
