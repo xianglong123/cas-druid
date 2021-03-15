@@ -2,10 +2,15 @@ server:
   port: 8086
 spring:
   datasource:
-    username: root
-    url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+    master:
+      username: root
+      url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      username: root
+      url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       # 初始化连接池的连接数量，大小，最小，最大
       initial-size: 5
@@ -49,7 +54,6 @@ spring:
       # spring监控，对内部各接口调用的监控
       aop-patterns: com.cas.*
       # 监控页面访问地址：http://localhost:8085/druid/
-      password-callback-class-name: com.cas.config.DbPasswordCallback
 mybatis:
   #配置mapper xml文件所在的路径
   mapper-locations: classpath:com.cas.dao/*.xml
