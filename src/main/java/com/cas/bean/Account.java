@@ -7,6 +7,17 @@ import java.util.Date;
  * @date: 下午4:22 2021/3/15
  * @version: V1.0
  * @review:
+ * create table tcc_account.account
+ * (
+ *     id            varchar(32)  not null comment '主键ID'
+ *         primary key,
+ *     user_id       varchar(128) not null comment '用户ID',
+ *     balance       decimal      not null comment '用户余额',
+ *     freeze_amount decimal      not null comment '冻结金额，扣款暂存余额',
+ *     create_time   datetime     not null,
+ *     update_time   datetime     null
+ * )
+ *     comment '账户余额表' collate = utf8mb4_bin;
  */
 public class Account {
 

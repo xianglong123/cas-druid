@@ -7,6 +7,19 @@ import java.util.Date;
  * @date: 上午11:39 2021/3/14
  * @version: V1.0
  * @review:
+ *
+ * create table user
+ * (
+ *     id          bigint auto_increment comment '主键ID'
+ *         primary key,
+ *     name        varchar(30) null comment '姓名',
+ *     age         int         null comment '年龄',
+ *     email       varchar(50) null comment '邮箱',
+ *     version     int         null comment '乐观锁',
+ *     deleted     int         null,
+ *     create_time datetime    null comment '创建时间',
+ *     update_time datetime    null comment '更新时间'
+ * );
  */
 public class User {
 
