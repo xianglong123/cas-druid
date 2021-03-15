@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cas.dao.UserMapper">
+
+    <resultMap id="result" type="com.cas.bean.User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="email" column="email"/>
+        <result property="version" column="version"/>
+        <result property="deleted" column="deleted"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="columns">id, name, age, email, version, deleted, create_time, update_time</sql>
+
+    <sql id="dynamicWhere">
+        <where>
+            <if test="@Ognl@isNotEmpty(confirmedCount)">AND CONFIRMED_COUNT = #{confirmedCount}</if>
+            <if test="@Ognl@isNotEmpty(curedCount)">AND CURED_COUNT = #{curedCount}</if>
+            <if test="@Ognl@isNotEmpty(provinceShortName)">AND PROVINCE_SHORT_NAME = #{provinceShortName}</if>
+            <if test="@Ognl@isNotEmpty(comment)">AND COMMENT = #{comment}</if>
+            <if test="@Ognl@isNotEmpty(provinceName)">AND PROVINCE_NAME = #{provinceName}</if>
+            <if test="@Ognl@isNotEmpty(deadCount)">AND DEAD_COUNT = #{deadCount}</if>
+            <if test="@Ognl@isNotEmpty(suspectedCount)">AND SUSPECTED_COUNT = #{suspectedCount}</if>
+        </where>
+    </sql>
+
+    <select id="queryByName" resultType="com.cas.bean.User" parameterType="string">
+        select
+        <include refid="columns"/>
+        from user
+        where name = #{name}
+    </select>
+
+
+</mapper>
+

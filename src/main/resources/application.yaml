@@ -1,0 +1,60 @@
+server:
+  port: 8086
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 初始化连接池的连接数量，大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次校验，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 是否缓存preparedStatement,也就是PSCache 官方建议MYSQL下建议关闭，个人建议如果想用SQL防火墙，建议打开
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall
+      # 通过connectProperties属性来打开mergeSql功能，慢SQL记录
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+      # WebStatFilter配置，说明请参考Druid Wiki,配置WebStatFilter
+      # 是否启用StatFilter默认值true
+      web-stat-filter:
+        enabled: true
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: admin
+        login-password: 123456
+        # ip白名单(没有配置为空,则允许所有访问)
+#        allow: 127.0.0.1
+#        deny: 127.0.0.1
+
+      # spring监控，对内部各接口调用的监控
+      aop-patterns: com.cas.*
+      # 监控页面访问地址：http://localhost:8085/druid/
+mybatis:
+  #配置mapper xml文件所在的路径
+  mapper-locations: classpath:com.cas.dao/*.xml
+  #Mybais 扫描别名包， 和注解@Alias联用
+  type-aliases-package: com.cas.bean
+  #  配置typeHandler 的扫描包
+  # typeHandler-handlers-package: com.cas.typeHandler
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    interceptors: com.sso.util.interceptorceptor.MybatisInterceptor
