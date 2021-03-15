@@ -14,8 +14,8 @@ import java.util.Properties;
  * @version: V1.0
  * @review:
  */
-@Component
 @Slf4j
+@Component
 public class DbPasswordCallback extends DruidPasswordCallback {
 
     @Override

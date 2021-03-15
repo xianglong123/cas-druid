@@ -1,3 +1,5 @@
+druid:
+  password: t3k1+w/mOlHCGdOnAd3xow==
 server:
   port: 8086
 spring:
@@ -30,7 +32,7 @@ spring:
       connect-properties:
         druid.stat.mergeSql: true;druid.stat.slowSqlMillis=5000
         publicKey: GOURD-HXNLYW-201314
-        password: t3k1+w/mOlHCGdOnAd3xow==
+        password: ${druid.password}
       # WebStatFilter配置，说明请参考Druid Wiki,配置WebStatFilter
       # 是否启用StatFilter默认值true
       web-stat-filter:

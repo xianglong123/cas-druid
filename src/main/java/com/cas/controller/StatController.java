@@ -1,7 +1,11 @@
 package com.cas.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.cas.bean.Account;
 import com.cas.bean.User;
+import com.cas.config.CommonConstant;
+import com.cas.config.TargetDataSource;
+import com.cas.dao.AccountMapper;
 import com.cas.dao.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +24,12 @@ public class StatController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private AccountMapper accountMapper;
+
     @RequestMapping("/queryByName")
     @ResponseBody
+    @TargetDataSource
     public String queryByName(String name) {
         if (StringUtils.isEmpty(name)) {
             return "name 不能为空";
@@ -30,5 +38,15 @@ public class StatController {
         return user.getName();
     }
 
+    @RequestMapping("/queryByUserId")
+    @ResponseBody
+    @TargetDataSource(value = CommonConstant.SLAVE_DATASOURCE)
+    public String queryById(String userId) {
+        if (StringUtils.isEmpty(userId)) {
+            return "name 不能为空";
+        }
+        Account account = accountMapper.queryById(userId);
+        return account.getId();
+    }
 
 }

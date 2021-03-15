@@ -1,3 +1,5 @@
+druid:
+  password: t3k1+w/mOlHCGdOnAd3xow==
 server:
   port: 8086
 spring:
@@ -5,11 +7,13 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
       username: root
+      password: 123456
       url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     slave:
       username: root
-      url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      password: 123456
+      url: jdbc:mysql://localhost:3306/tcc_account?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       # 初始化连接池的连接数量，大小，最小，最大
@@ -35,7 +39,7 @@ spring:
       connect-properties:
         druid.stat.mergeSql: true;druid.stat.slowSqlMillis=5000
         publicKey: GOURD-HXNLYW-201314
-        password: t3k1+w/mOlHCGdOnAd3xow==
+        password: ${druid.password}
       # WebStatFilter配置，说明请参考Druid Wiki,配置WebStatFilter
       # 是否启用StatFilter默认值true
       web-stat-filter:

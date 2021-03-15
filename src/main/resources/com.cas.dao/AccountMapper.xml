@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cas.dao.AccountMapper">
+
+    <resultMap id="result" type="com.cas.bean.Account">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="balance" column="balance"/>
+        <result property="freezeAmount" column="freeze_Amount"/>
+        <result property="createTime" column="create_Time"/>
+        <result property="updateTime" column="update_Time"/>
+    </resultMap>
+
+    <sql id="columns">id, user_id, balance, freeze_Amount, create_time, update_time</sql>
+
+    <select id="queryById" resultType="com.cas.bean.Account">
+        select
+        <include refid="columns"/>
+        from account
+        where user_id = #{userId}
+    </select>
+
+
+</mapper>
+

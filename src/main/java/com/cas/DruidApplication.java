@@ -1,7 +1,10 @@
 package com.cas;
 
+import com.cas.config.DynamicDataSourceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author: xianglong[1391086179@qq.com]
@@ -9,7 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version: V1.0
  * @review:
  */
-@SpringBootApplication
+@Import({DynamicDataSourceConfig.class})
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 public class DruidApplication {
 
     public static void main(String[] args) {

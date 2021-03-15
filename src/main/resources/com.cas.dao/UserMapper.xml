@@ -16,18 +16,6 @@
 
     <sql id="columns">id, name, age, email, version, deleted, create_time, update_time</sql>
 
-    <sql id="dynamicWhere">
-        <where>
-            <if test="@Ognl@isNotEmpty(confirmedCount)">AND CONFIRMED_COUNT = #{confirmedCount}</if>
-            <if test="@Ognl@isNotEmpty(curedCount)">AND CURED_COUNT = #{curedCount}</if>
-            <if test="@Ognl@isNotEmpty(provinceShortName)">AND PROVINCE_SHORT_NAME = #{provinceShortName}</if>
-            <if test="@Ognl@isNotEmpty(comment)">AND COMMENT = #{comment}</if>
-            <if test="@Ognl@isNotEmpty(provinceName)">AND PROVINCE_NAME = #{provinceName}</if>
-            <if test="@Ognl@isNotEmpty(deadCount)">AND DEAD_COUNT = #{deadCount}</if>
-            <if test="@Ognl@isNotEmpty(suspectedCount)">AND SUSPECTED_COUNT = #{suspectedCount}</if>
-        </where>
-    </sql>
-
     <select id="queryByName" resultType="com.cas.bean.User" parameterType="string">
         select
         <include refid="columns"/>
