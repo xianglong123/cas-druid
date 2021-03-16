@@ -3,8 +3,6 @@ package com.cas.controller;
 import com.alibaba.druid.util.StringUtils;
 import com.cas.bean.Account;
 import com.cas.bean.User;
-import com.cas.config.CommonConstant;
-import com.cas.config.TargetDataSource;
 import com.cas.dao.AccountMapper;
 import com.cas.dao.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,7 @@ public class StatController {
 
     @RequestMapping("/queryByName")
     @ResponseBody
-    @TargetDataSource
+//    @TargetDataSource
     public String queryByName(String name) {
         if (StringUtils.isEmpty(name)) {
             return "name 不能为空";
@@ -38,9 +36,16 @@ public class StatController {
         return user.getName();
     }
 
+    @RequestMapping("/updateAge")
+    @ResponseBody
+//    @TargetDataSource
+    public String updateAge() {
+        return String.valueOf(userMapper.updateAge());
+    }
+
     @RequestMapping("/queryByUserId")
     @ResponseBody
-    @TargetDataSource(value = CommonConstant.SLAVE_DATASOURCE)
+//    @TargetDataSource(value = CommonConstant.SLAVE_DATASOURCE)
     public String queryById(String userId) {
         if (StringUtils.isEmpty(userId)) {
             return "name 不能为空";

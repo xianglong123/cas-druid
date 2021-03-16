@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author: xianglong[1391086179@qq.com]
  * @date: 上午10:50 2021/3/15
  * @version: V1.0
- * @review: 环境：application.yaml
+ * @review: 环境：application-dev.yaml
  */
 @Slf4j
 @Component

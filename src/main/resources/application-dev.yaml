@@ -3,11 +3,20 @@ druid:
 server:
   port: 8086
 spring:
+  main:
+    # 如果有两个重复的bean被加载到容器内，允许第二个覆盖第一个，默认false
+    allow-bean-definition-overriding: true
   datasource:
-    username: root
-    url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
+    master:
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       # 初始化连接池的连接数量，大小，最小，最大
       initial-size: 5
@@ -59,6 +68,6 @@ mybatis:
   type-aliases-package: com.cas.bean
   #  配置typeHandler 的扫描包
   # typeHandler-handlers-package: com.cas.typeHandler
-#  configuration:
-#    map-underscore-to-camel-case: true
+  configuration:
+    map-underscore-to-camel-case: true
 #    interceptors: com.sso.util.interceptorceptor.MybatisInterceptor

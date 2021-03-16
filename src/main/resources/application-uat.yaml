@@ -3,6 +3,8 @@ druid:
 server:
   port: 8086
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     master:

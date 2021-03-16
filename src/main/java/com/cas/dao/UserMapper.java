@@ -14,4 +14,5 @@ public interface UserMapper {
 
     User queryByName(String name);
 
+    int updateAge();
 }
