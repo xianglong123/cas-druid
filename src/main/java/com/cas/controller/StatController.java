@@ -5,6 +5,7 @@ import com.cas.bean.Account;
 import com.cas.bean.User;
 import com.cas.dao.AccountMapper;
 import com.cas.dao.UserMapper;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
