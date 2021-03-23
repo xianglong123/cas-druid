@@ -3,6 +3,7 @@ package com.cas.controller;
 import com.alibaba.druid.util.StringUtils;
 import com.cas.bean.Account;
 import com.cas.bean.User;
+import com.cas.config.aop.LogHistory;
 import com.cas.dao.AccountMapper;
 import com.cas.dao.UserMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -28,6 +29,7 @@ public class StatController {
 
     @RequestMapping("/queryByName")
     @ResponseBody
+    @LogHistory
 //    @TargetDataSource
     public String queryByName(String name) {
         if (StringUtils.isEmpty(name)) {
