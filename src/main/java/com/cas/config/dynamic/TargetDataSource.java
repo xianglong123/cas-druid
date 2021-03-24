@@ -1,4 +1,6 @@
-package com.cas.config;
+package com.cas.config.dynamic;
+
+import com.cas.config.dynamic.CommonConstant;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -11,6 +13,8 @@ import java.lang.annotation.Target;
  * @date: 上午11:01 2021/3/15
  * @version: V1.0
  * @review:
+ *
+ * 切换数据源，默认master
  */
 @Documented
 @Target(ElementType.METHOD)

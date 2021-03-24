@@ -1,13 +1,10 @@
 package com.cas.config.interceptor;
 
-import com.cas.config.CommonConstant;
-import com.cas.config.DynamicDataSource;
+import com.cas.config.dynamic.CommonConstant;
+import com.cas.config.dynamic.DynamicDataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
-import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.Interceptor;
@@ -17,9 +14,7 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
 import java.util.Properties;
 
 /**

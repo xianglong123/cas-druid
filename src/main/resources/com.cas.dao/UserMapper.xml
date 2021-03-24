@@ -26,6 +26,8 @@
     <update id="updateAge">
         update user set age = 12 where id = 4
     </update>
+    <!--  开启二级缓存  -->
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>
 
 
 </mapper>

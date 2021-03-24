@@ -70,4 +70,8 @@ mybatis:
   # typeHandler-handlers-package: com.cas.typeHandler
   configuration:
     map-underscore-to-camel-case: true
-#    interceptors: com.sso.util.interceptorceptor.MybatisInterceptor
+    # 三种执行模式，simple,reuse,batch
+    default-executor-type: reuse
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    interceptors: com.cas.config.interceptor.MybatisInterceptor
+    object-factory: com.cas.config.factory.MyObjectFactory

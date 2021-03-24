@@ -67,6 +67,16 @@ mybatis:
   type-aliases-package: com.cas.bean
   #  配置typeHandler 的扫描包
   # typeHandler-handlers-package: com.cas.typeHandler
-#  configuration:
-#    map-underscore-to-camel-case: true
-#    interceptors: com.sso.util.interceptorceptor.MybatisInterceptor
+  configuration:
+    map-underscore-to-camel-case: true
+    # 三种执行模式，simple,reuse,batch
+    default-executor-type: simple
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    interceptors: com.cas.config.interceptor.MybatisInterceptor
+#    object-factory: com.cas.config.factory.MyObjectFactory
+    # 一级缓存生命周期
+#    local-cache-scope: session
+    # 禁用二级缓存
+    cache-enabled: true
+
+

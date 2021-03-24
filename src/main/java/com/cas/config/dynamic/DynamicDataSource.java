@@ -1,4 +1,4 @@
-package com.cas.config;
+package com.cas.config.dynamic;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

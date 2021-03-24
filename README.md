@@ -37,3 +37,17 @@
 
 # 总结
     多数据源测试的时候，修改环境为uat
+    @ConditionalOnBean（仅仅在当前上下文中存在某个对象时，才会实例化一个Bean）
+    @ConditionalOnClass（某个class位于类路径上，才会实例化一个Bean）
+    @ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）
+    @ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）
+    @ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）
+    @ConditionalOnNotWebApplication（不是web应用）
+    @EnableConfigurationProperties
+    如果一个配置类只配置@ConfigurationProperties注解，而没有使用@Component，那么在IOC容器中是获取不到properties 配置文件转化的bean。 
+    @EnableConfigurationProperties 相当于把使用 @ConfigurationProperties 的类进行了一次注入。
+    
+## mybatis学习网站
+    基础知识：http://c.biancheng.net/view/4320.html
+    一级缓存：https://mp.weixin.qq.com/s?__biz=MzkwMDE1MzkwNQ==&mid=2247496101&idx=1&sn=8d32c975eb41744903bb6331a500c28d&source=41#wechat_redirect
+    二级缓存：https://www.cnblogs.com/cxuanBlog/p/11333021.html

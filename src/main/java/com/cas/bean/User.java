@@ -1,5 +1,7 @@
 package com.cas.bean;
 
+import lombok.ToString;
+
 import java.util.Date;
 
 /**
@@ -21,6 +23,7 @@ import java.util.Date;
  *     update_time datetime    null comment '更新时间'
  * );
  */
+//@ToString
 public class User {
 
     private String id;

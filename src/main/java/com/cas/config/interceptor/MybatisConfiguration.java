@@ -14,7 +14,7 @@ import java.util.Properties;
 public class MybatisConfiguration {
 
     /**
-     * 注册拦截器
+     * 注册拦截器，这样生成sqlSessionFactory的时候就会找到这个拦截器并配置进去
      */
     @Bean
     public MybatisInterceptor mybatisInterceptor() {

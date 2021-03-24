@@ -1,4 +1,4 @@
-package com.cas.config;
+package com.cas.config.dynamic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +26,7 @@ public class DataSourceAspect implements Ordered {
     /**
      * 切点: 所有配置 TargetDataSource 注解的方法
      */
-    @Pointcut("@annotation(com.cas.config.TargetDataSource)")
+    @Pointcut("@annotation(com.cas.config.dynamic.TargetDataSource)")
     public void dataSourcePointCut() {}
 
     @Around("dataSourcePointCut()")
@@ -36,15 +36,15 @@ public class DataSourceAspect implements Ordered {
         TargetDataSource ds = method.getAnnotation(TargetDataSource.class);
         // 通过判断 @ChangeDataSource注解 中的值来判断当前方法应用哪个数据源
         DynamicDataSource.setDataSource(ds.value());
-        log.info("^o^= 当前数据源: " + ds.value());
+        log.info("当前数据源: 【{}】" , ds.value());
         try {
             return point.proceed();
         } finally {
             DynamicDataSource.clearDataSource();
-            log.debug("^o^= clean datasource");
+            log.debug("clean datasource");
         }
     }
-    
+
     @Override
     public int getOrder() {
         return 1;

@@ -1,4 +1,4 @@
-package com.cas.config;
+package com.cas.config.dynamic;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import lombok.extern.slf4j.Slf4j;
