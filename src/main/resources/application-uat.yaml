@@ -71,7 +71,7 @@ mybatis:
     map-underscore-to-camel-case: true
     # 三种执行模式，simple,reuse,batch
     default-executor-type: simple
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    interceptors: com.cas.config.interceptor.MybatisInterceptor
 #    object-factory: com.cas.config.factory.MyObjectFactory
     # 一级缓存生命周期

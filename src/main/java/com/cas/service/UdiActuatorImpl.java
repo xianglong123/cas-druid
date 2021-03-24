@@ -56,7 +56,6 @@ public class UdiActuatorImpl implements UdiActuator{
         log.info("输出结果【{}】", sandy);
         log.info("输出结果【{}】", sandy2);
         log.info("输出结果【{}】", sandy3);
-//        log.info("输出结果【{}】", sandy.toString());
     }
 
 
