@@ -41,8 +41,10 @@ public class StatController {
         if (StringUtils.isEmpty(name)) {
             return "name 不能为空";
         }
-        User user = userMapper.queryByName(name);
-        return user.getName();
+        testSqlSession();
+//        User user = userMapper.queryByName(name);
+//        return user.getName();
+        return "ok";
     }
 
     /**

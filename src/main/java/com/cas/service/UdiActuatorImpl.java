@@ -5,6 +5,7 @@ import com.cas.dao.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,14 +45,15 @@ public class UdiActuatorImpl implements UdiActuator{
      *
      * 第二种执行sql的方式【推荐】
      * 通过sqlSession执行sql
-     *  顺带测试一级缓存
+     *  顺带测试一级缓存:
+     *  sqlSession.clearCache();清空缓存
      */
     @Override
     public void query2() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         User sandy = mapper.queryByName("Sandy");
-        User sandy2 = mapper.queryByName("Billie");
+        User sandy2 = mapper.queryByName("Sandy");
         User sandy3 = mapper.queryByName("Sandy");
         log.info("输出结果【{}】", sandy);
         log.info("输出结果【{}】", sandy2);
