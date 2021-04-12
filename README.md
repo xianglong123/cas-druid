@@ -3,6 +3,37 @@
 
 # 项目技术
     springboot2.0.X + gradle6.0+ + druid1.1.10
+
+# 用到的表结构
+```sql
+create table if not exists user
+(
+	id bigint auto_increment comment '主键ID'
+		primary key,
+	name varchar(30) null comment '姓名',
+	age int null comment '年龄',
+	email varchar(50) null comment '邮箱',
+	version int null comment '乐观锁',
+	deleted int null,
+	create_time datetime null comment '创建时间',
+	update_time datetime null comment '更新时间'
+);
+-- 上面这张表和下面这张表不在同一个库中，关键是来测试多数据源的。
+
+create table if not exists tcc_account.account
+(
+	id varchar(32) not null comment '主键ID'
+		primary key,
+	user_id varchar(128) not null comment '用户ID',
+	balance decimal not null comment '用户余额',
+	freeze_amount decimal not null comment '冻结金额，扣款暂存余额',
+	create_time datetime not null,
+	update_time datetime null
+)
+comment '账户余额表' collate=utf8mb4_bin;
+
+
+```
     
 # 项目结构
     applicaiton.yaml: 只测试druid和密码回调
