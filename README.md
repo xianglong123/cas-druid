@@ -273,10 +273,10 @@ create index user_age_name_index
 ### MySQL UNION 操作符
     select id, name from user union
     select id, title from articles;
-![这是图片](./src/main/resources/static/union-2.png "Magic Gardens")
+![这是图片](./src/main/resources/static/union-2.jpg "Magic Gardens")
     select id, title from articles union
     select id, name from user;
-![这是图片](./src/main/resources/static/union-1.png "Magic Gardens")
+![这是图片](./src/main/resources/static/union-1.jpg "Magic Gardens")
     
     
     
