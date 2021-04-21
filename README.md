@@ -169,6 +169,11 @@ comment '账户余额表' collate=utf8mb4_bin;
 
     MySQL 的覆盖索引与回表 【https://zhuanlan.zhihu.com/p/107125866】
     
+    扩展：
+    前缀索引[https://www.jianshu.com/p/fc80445044cc]：
+    
+    
+    
 ### 演示索引优化
     初始化表
 ```sql
@@ -277,8 +282,61 @@ create index user_age_name_index
     select id, title from articles union
     select id, name from user;
 ![这是图片](./src/main/resources/static/union-1.jpg "Magic Gardens")
-    
-    
-    
 
+
+### mysql 优化策略
+    设计表时：
+        1、字段避免null值出现，null值很难查询优化且占用额外的索引空间，推荐默认数字0代替null。
+        2、尽量使用INT而非BIGINT，如果非负则加上UNSIGNED（这样数值容量会扩大一倍），当然能使用TINYINT、SMALLINT、MEDIUM_INT更好。
+        3、使用枚举或整数代替字符串类型
+        4、尽量使用TIMESTAMP而非DATETIME
+        5、单表不要有太多字段，建议在20以内
+        6、用整型来存IP
+
+    索引：
+        1、索引并不是越多越好，要根据查询有针对性的创建，考虑在WHERE和ORDER BY命令上涉及的列建立索引，可根据EXPLAIN来查看是否用了索引还是全表扫描
+        2、应尽量避免在WHERE子句中对字段进行NULL值判断，否则将导致引擎放弃使用索引而进行全表扫描
+        3、值分布很稀少的字段不适合建索引，例如"性别"这种只有两三个值的字段
+        4、字符字段只建前缀索引
+        5、字符字段最好不要做主键
+        6、不用外键，由程序保证约束
+        7、尽量不用UNIQUE，由程序保证约束
+        8、使用多列索引时主意顺序和查询条件保持一致，同时删除不必要的单列索引
       
+    sql 的编写需要注意优化
+          使用limit对查询结果的记录进行限定
+          避免select *，将需要查找的字段列出来
+          使用连接（join）来代替子查询
+          拆分大的delete或insert语句
+          可通过开启慢查询日志来找出较慢的SQL
+          不做列运算：SELECT id WHERE age + 1 = 10，任何对列的操作都将导致表扫描，它包括数据库教程函数、计算表达式等等，查询时要尽可能将操作移至等号右边
+          sql语句尽可能简单：一条sql只能在一个cpu运算；大语句拆小语句，减少锁时间；一条大sql可以堵死整个库
+          OR改写成IN：OR的效率是n级别，IN的效率是log(n)级别，in的个数建议控制在200以内
+          不用函数和触发器，在应用程序实现
+          避免%xxx式查询
+          少用JOIN
+          使用同类型进行比较，比如用'123'和'123'比，123和123比
+          尽量避免在WHERE子句中使用!=或<>操作符，否则将引擎放弃使用索引而进行全表扫描
+          对于连续数值，使用BETWEEN不用IN：SELECT id FROM t WHERE num BETWEEN 1 AND 5
+          列表数据不要拿全表，要使用LIMIT来分页，每页数量也不要太大   
+    
+    引擎
+        MyISAM
+          不支持行锁，读取时对需要读到的所有表加锁，写入时则对表加排它锁
+          不支持事务
+          不支持外键
+          不支持崩溃后的安全恢复
+          在表有读取查询的同时，支持往表中插入新纪录
+          支持BLOB和TEXT的前500个字符索引，支持全文索引
+          支持延迟更新索引，极大提升写入性能
+          对于不会进行修改的表，支持压缩表，极大减少磁盘空间占用
+    
+        InnoDB
+          支持行锁，采用MVCC来支持高并发
+          支持事务
+          支持外键
+          支持崩溃后的安全恢复
+          不支持全文索引
+        
+        总体来讲，MyISAM适合SELECT密集型的表，而InnoDB适合INSERT和UPDATE密集型的表
+
