@@ -340,3 +340,32 @@ create index user_age_name_index
         
         总体来讲，MyISAM适合SELECT密集型的表，而InnoDB适合INSERT和UPDATE密集型的表
 
+### 最左匹配原则
+    我们创建组合索引的时候，比如（a,b,c）通过组合索引来创建索引树是先根据从左到右优先排序来构建的，所以我们可以看到这些索引的a列是有序的，b列c列是无序的。
+    这就导致以下几种状况
+    1、我们在查询数据的时候条件中必须要有a存在（最左条件存在）
+    2、在全局b和c是无序的，所以不能使用范围查询，但是如果条件中指定a=x则b在这个前提下是有序的，所以可以使用范围查询，一次类推。
+    3、如果跳过a，条件中直接用b和c则不采用索引
+    4、like匹配：索引只适用于前缀匹配，中缀和后缀匹配都不走索引 （类似于前缀索引的功能）
+
+
+### 好的博文
+    MySql索引和结构深度解析!(多动图详细版)【https://zhuanlan.zhihu.com/p/364642137】
+    MySql索引优化策略【https://www.cnblogs.com/qlqwjy/p/8592043.html】
+```sql
+CREATE TABLE t5 (
+                    c1 CHAR(1) NOT NULL DEFAULT 'a',
+                    c2 CHAR(1) NOT NULL DEFAULT 'b',
+                    c3 CHAR(1) NOT NULL DEFAULT 'c',
+                    c4 CHAR(1) NOT NULL DEFAULT 'd',
+                    c5 CHAR(1) NOT NULL DEFAULT 'e',
+                    INDEX c1234(c1,c2,c3,c4)
+);
+
+
+explain select  * from t5 where c1 = 'a' order by c3, c2; -- 走文件排序
+explain select  * from t5 where c1 = 'a' order by c2, c3, c4; -- 不走文件排序，走索引
+
+explain select  c1, c4 from t5 where c1 = 'a' and c4 = 'd' group by c3, c2; -- 走临时表
+explain select  c1, c4 from t5 where c1 = 'a' and c4 = 'd' group by c2, c3; -- 不走临时表，走索引
+```
