@@ -352,6 +352,7 @@ create index user_age_name_index
 ### 好的博文
     MySql索引和结构深度解析!(多动图详细版)【https://zhuanlan.zhihu.com/p/364642137】
     MySql索引优化策略【https://www.cnblogs.com/qlqwjy/p/8592043.html】
+    LRU算法【https://www.jianshu.com/p/d533d8a66795】
 ```sql
 CREATE TABLE t5 (
                     c1 CHAR(1) NOT NULL DEFAULT 'a',
@@ -369,3 +370,300 @@ explain select  * from t5 where c1 = 'a' order by c2, c3, c4; -- 不走文件排
 explain select  c1, c4 from t5 where c1 = 'a' and c4 = 'd' group by c3, c2; -- 走临时表
 explain select  c1, c4 from t5 where c1 = 'a' and c4 = 'd' group by c2, c3; -- 不走临时表，走索引
 ```
+
+### 扩展优化实际
+    1、延迟关联，就比如
+        select * from user where age = 18;  和 
+        select a.* from user a inner join (select id from user where age = 18) b on (a.id = b.id)
+        上面两条语句第二条查询效率高，第一条是边查边回表，第二条是统一查id然后再一起通过id查数据，这个操作叫"延迟关联"
+    
+    2、索引转列，就是本列的数据不好创建索引，我们可以通过数据加密的方式将这列的数据加密存入额外列，在这个额外的列中创建索引，加密算法，crc32、md5、sha-1
+```sql
+-- 建表
+CREATE TABLE t7(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    url VARCHAR(40),
+    crcurl INT UNSIGNED NOT NULL DEFAULT 0);
+
+-- 初始化数据
+mysql> insert into t7(url) values('http://www.baidu.com');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into t7(url) values('http://www.zixue.com');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into t7(url) values('http://www.qlq.com');
+Query OK, 1 row affected (0.19 sec)
+
+-- 更新|加密数据
+mysql> update t7 set crcurl = crc32(url);
+Query OK, 3 rows affected (0.22 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from t7;
++----+----------------------+------------+
+| id | url                  | crcurl     |
++----+----------------------+------------+
+|  7 | http://www.baidu.com | 3500265894 |
+|  9 | http://www.zixue.com | 2107636668 |
+| 11 | http://www.qlq.com   | 2605661224 |
++----+----------------------+------------+
+3 rows in set (0.00 sec)
+
+-- 创建索引
+mysql> alter table t7 add index url(url(15));
+Query OK, 0 rows affected (0.51 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table t7 add index crcurl(crcurl);
+Query OK, 0 rows affected (0.43 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+-- 效果比对
+mysql> explain select * from t7 where url='http://www.baidu.com'\G
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: t7
+   partitions: NULL
+         type: ref
+possible_keys: url
+          key: url
+      key_len: 48
+          ref: const
+         rows: 1
+     filtered: 100.00
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+
+mysql> explain select * from t7 where crcurl=crc32('http://www.baidu.com')\G
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: t7
+   partitions: NULL
+         type: ref
+possible_keys: crcurl
+          key: crcurl
+      key_len: 4
+          ref: const
+         rows: 1
+     filtered: 100.00
+        Extra: NULL
+1 row in set, 1 warning (0.00 sec)
+
+-- 所以，上面的方法可以说是将对一列的索引转化为另一列，最好使用整型(长度短，节约空间)。利用一定的算法将相似度较高的数据存到另一列并添加索引。
+```
+    3、索引平衡，创建前缀索引减少索引占用空间，并在区分度允许的区间取平衡值
+        区分度计算sql: select count(distinct left(word,6))/count(*) from dict;
+        对于一般的系统应用: 区别度能达到0.1,索引的性能就可以接受.
+    
+    4、排序分组走索引，通过组合索引优化order by 和 group by ，避免使用文件排序和临时表
+    
+    总结：理想的索引应包含 1:查询频繁 2:区分度高  3:长度小  4: 尽量能覆盖常用查询字段.
+
+### 单行函数
+    1、字符函数
+    length
+    concat
+    substr
+    lpad
+    rpad
+    upper
+    lower
+    replace
+    instr
+    trim
+    2、数学函数
+    round
+    ceil
+    floor
+    truncate
+    mod
+    3、日期函数
+    now
+    curdate
+    curtime
+    year
+    month
+    monthname
+    day
+    hour
+    minute
+    second
+    str_to_date
+    date_format
+    datadiff
+    4、其他函数
+    version
+    databases
+    user
+    tables
+    5、控制函数
+    if
+    case
+    
+```sql
+-- length
+select length('123');
+
+-- concat || upper || lower
+select concat(upper('abc'), lower('efd')) as 姓名;
+
+-- substr
+select substr('李莫愁爱上了陆展元', 7) out_put;
+select substr('李莫愁爱上了陆展元', 1, 3) out_put;
+
+-- 姓名第一个字母大写
+select concat(upper(substr('xianglong', 1, 1)), lower(substr('xianglong', 2))) out_put;
+
+-- instr 返回某个子串第一个索引，没有返回0
+select instr('xianglong', 'long') out_put;
+
+-- trim 过滤空格
+select trim('       xianglong      ') out_put;
+select length(trim('       xianglong      ')) out_put;
+select trim('a' from 'aaaaaaaaaaxiangaaalongaaa') out_put;
+
+-- lpad 用指定的字符实现左填充指定长度
+select lpad('xiang',10,'*') out_put;
+
+-- rpad 用指定的字符实现右填充指定长度
+select rpad('xiang',12,'*') out_put;
+
+-- replace 替换函数
+select replace('我喜欢你', '你', '她') out_put;
+
+-- 数学函数
+-- round 四舍五入
+select round(-1.55);
+select round(-1.567, 2);
+
+-- ceil 向上取整 返回>=参数的最小整数
+select ceil(1.01);
+
+-- floor 向下取整，返回<=参数的最大整数
+select floor(-9.99);
+
+-- truncate 截断
+select truncate(1.6999, 2);
+
+-- mod 取余
+select mod(10,-3);
+
+-- 日期函数
+-- now 返回当前系统时间 + 日期
+select now();
+
+-- curdate 返回当前系统日期，不包含日期
+select curdate();
+
+-- curtime 返回当前时间，不包含日期
+select curtime();
+
+-- 可以获取指定的部分，年，月，日，小时，分钟，秒
+select year(now()) 年;
+select year('1999-1-1') 年;
+select month(now()) 月;
+select monthname(now()) 月;
+
+-- str_to_date 将日期格式的字符转换成指定格式的日期
+# %Y    四位的年份
+# %y    2位的年份
+# %m    月份（01,02...11,12）
+# %c    月份（1,2...11,12）
+# %d    日（01,02...）
+# %H    小时（24小时制）
+# %h    小时（12小时制）
+# %i    分钟（00,01...59）
+# %s    秒（00,01...59）
+select str_to_date('1992-1-1 12:12:59', '%Y-%m-%d %H:%i:%s')
+
+-- date_format 将日期转换成字符
+select date_format(now(), '%Y-%m-%d') out_put;
+
+-- datediff 求两个日期之间的天数
+select datediff(now(), '1996-9-14');
+
+-- 其他函数
+select version();
+select database();
+select user();
+
+-- 流程控制函数
+-- if函数， if else的效果
+select if(10>5, '大', '小');
+
+-- case函数的使用： switch case 的效果
+select id, age,
+case age
+when 12 then age*1
+when 26 then age*2
+else age
+end as new_age
+from user;
+
+select id, age,
+case
+when age < 13 then 'young'
+when age > 25 then 'old'
+else age
+end as leavel
+from user;
+```
+
+### 分组函数
+    功能：用作统计使用，又称为聚合函数或统计函数或组函数
+    分类：
+    sum 求和、avg 平均值、max 最大值、min 最小值、 count 计算个数
+    
+```sql
+-- sum 求和
+select sum(age) from user ;
+select avg(age) from user ;
+select max(age) from user ;
+select min(age) from user ;
+select count(age) from user ;
+
+select sum(age), round(avg(age), 2), max(age), min(age), count(age) from user ;
+
+-- 是否忽略null
+
+-- 和distinct搭配 去重
+select sum(distinct age) from user;
+select sum(age) from user;
+```    
+
+### group
+    语法：
+        select 分组函数,列（要求出现在group by的后面）
+        from 表
+        【where 筛选条件】
+        group by 分组的列表
+        【order by 子句】
+    注意：
+        查询列表必须特殊，要求是分组函数和group by 后出现的字段
+    特点：
+        1、分组查询中的筛选条件分为两类
+                        数据源             位置                   关键字
+        分组前筛选        原始类             group by子句的前面       where
+        分组后筛选        分组后的结果集       group by子句的后面       having
+        
+        1⃣️、分组函数做条件肯定是放在having子句中
+        2⃣️、能用分组前筛选的，就优先考虑使用分组前筛选
+        
+        2、group by 子句支持单个字段分组，多个字段分组（多个字段之间用逗号隔开没有顺序要求）
+        3、也可以添加排序（排序是放在所有条件之后的）
+
+### 
+
+
+
+
+
+
+
+
+
+
+
