@@ -1,7 +1,8 @@
-package com.cas.service;
+package com.cas.service.impl;
 
 import com.cas.bean.User;
 import com.cas.dao.UserMapper;
+import com.cas.service.UdiActuator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class UdiActuatorImpl implements UdiActuator{
+public class UdiActuatorImpl implements UdiActuator {
 
     @Autowired
     private SqlSessionFactory sqlSessionFactory;

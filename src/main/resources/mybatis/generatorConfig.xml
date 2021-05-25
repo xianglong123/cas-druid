@@ -17,6 +17,18 @@
         <!-- 格式化XML代码 -->
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
 
+
+        <!-- 自动生成toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 自动生成equals方法和hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="com.cas.mybatis.plugin.MapperPlugin">
+            <property name="targetProject" value="src/main/java"/>
+            <property name="targetPackage" value="com.cas.dao"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -38,6 +50,7 @@
         <javaModelGenerator targetPackage="com.cas.bean" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.cas.mybatis.base.BaseModel"/>
         </javaModelGenerator>
 
         <!--xml生成配置-->
@@ -48,6 +61,7 @@
         <!--接口生成配置-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.cas.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
+            <property name="rootInterface" value="com.cas.mybatis.mapper.BaseMapper"/>
         </javaClientGenerator>
 
         <table tableName="t5" domainObjectName="T5DO" enableCountByExample="false" enableUpdateByExample="false"
