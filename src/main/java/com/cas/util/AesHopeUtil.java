@@ -2,6 +2,8 @@ package com.cas.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,8 +18,8 @@ import java.security.SecureRandom;
  * @author: gourd
  *
  **/
-@Slf4j
 public class AesHopeUtil {
+    private static final Logger log = LoggerFactory.getLogger(AesHopeUtil.class);
     private static final String KEY_ALGORITHM = "AES";
     private static final String DEFAULT_CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
 

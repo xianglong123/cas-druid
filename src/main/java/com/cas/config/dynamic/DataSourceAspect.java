@@ -1,11 +1,14 @@
 package com.cas.config.dynamic;
 
+import com.cas.util.AesHopeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +23,8 @@ import java.lang.reflect.Method;
  **/
 @Aspect
 @Component
-@Slf4j
 public class DataSourceAspect implements Ordered {
-
+    private static final Logger log = LoggerFactory.getLogger(DataSourceAspect.class);
     /**
      * 切点: 所有配置 TargetDataSource 注解的方法
      */

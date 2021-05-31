@@ -1,12 +1,15 @@
 package com.cas.service.impl;
 
 import com.cas.bean.User;
+import com.cas.config.dynamic.DataSourceAspect;
 import com.cas.dao.UserMapper;
 import com.cas.service.UdiActuator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +25,9 @@ import java.util.Map;
  * 第一种更加灵活
  * 第二种更加符合对象的思想
  */
-@Slf4j
 @Service
 public class UdiActuatorImpl implements UdiActuator {
-
+    private static final Logger log = LoggerFactory.getLogger(UdiActuatorImpl.class);
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 

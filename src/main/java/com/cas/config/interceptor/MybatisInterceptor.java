@@ -1,6 +1,7 @@
 package com.cas.config.interceptor;
 
 import com.cas.config.dynamic.CommonConstant;
+import com.cas.config.dynamic.DataSourceAspect;
 import com.cas.config.dynamic.DynamicDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
@@ -14,6 +15,8 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -23,14 +26,13 @@ import java.util.Properties;
  * @version: V1.0
  * @review: mybatis拦截器
  */
-@Slf4j
 @Intercepts(
         {
                 @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),
                 @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
         })
 public class MybatisInterceptor implements Interceptor {
-
+    private static final Logger log = LoggerFactory.getLogger(MybatisInterceptor.class);
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         log.warn("bbbbbb");

@@ -2,6 +2,8 @@ package com.cas.config.dynamic;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,9 +22,8 @@ import java.util.Map;
  * @since: 1.0
  **/
 @Configuration
-@Slf4j
 public class DynamicDataSourceConfig {
-
+    private static final Logger log = LoggerFactory.getLogger(DynamicDataSourceConfig.class);
     /**
      * 创建 TargetDataSource Bean
      */

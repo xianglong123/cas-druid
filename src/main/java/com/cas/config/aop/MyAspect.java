@@ -1,10 +1,13 @@
 package com.cas.config.aop;
 
+import com.cas.config.dynamic.DataSourceAspect;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,11 +16,10 @@ import org.springframework.stereotype.Component;
  * @version: V1.0
  * @review: 自定义AOP切点
  */
-@Slf4j
 @Aspect
 @Component
 public class MyAspect {
-
+    private static final Logger log = LoggerFactory.getLogger(MyAspect.class);
     @Pointcut("execution(* com.cas.controller.*.*(..))")
     public void pointCut() {
     }
