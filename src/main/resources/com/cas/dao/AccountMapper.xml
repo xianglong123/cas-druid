@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="columns">id, user_id, balance, freeze_Amount, create_time, update_time</sql>
-
+    <!--xianglong1233@163.com/1391086179xl..    -->
     <select id="queryById" resultType="com.cas.bean.Account">
         select
         <include refid="columns"/>
