@@ -9,7 +9,7 @@ spring:
   datasource:
     master:
       username: root
-      password: 123456
+      password: 12345678
       url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     slave:
@@ -73,5 +73,5 @@ mybatis:
     # 三种执行模式，simple,reuse,batch
     default-executor-type: reuse
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    interceptors: com.cas.config.interceptor.MybatisInterceptor
+#    interceptors: com.cas.config.interceptor.MybatisInterceptor
     object-factory: com.cas.config.factory.MyObjectFactory

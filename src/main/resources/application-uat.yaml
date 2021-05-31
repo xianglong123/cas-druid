@@ -9,13 +9,13 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
       username: root
-      password: 123456
+      password: 12345678
       url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     slave:
       username: root
       password: 12345678
-      url: jdbc:mysql://localhost:3306/tcc_account?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       # 初始化连接池的连接数量，大小，最小，最大
