@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cas.dao.BigDataMapper">
+
+    <resultMap id="result" type="com.cas.bean.BigData">
+        <result property="detail" column="detail"/>
+        <result property="createtime" column="createtime"/>
+        <result property="validity" column="validity"/>
+    </resultMap>
+
+    <sql id="columns">detail, createtime, validity</sql>
+    <!--xianglong1233@163.com/1391086179xl..    -->
+
+    <insert id="add" parameterType="com.cas.bean.BigData">
+        insert into bigData
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="validity != null">
+                validity,
+            </if>
+                createtime,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="detail != null">
+                #{detail,jdbcType=CHAR},
+            </if>
+            <if test="validity != null">
+                #{validity,jdbcType=CHAR},
+            </if>
+            sysdate(),
+        </trim>
+    </insert>
+
+
+</mapper>
+

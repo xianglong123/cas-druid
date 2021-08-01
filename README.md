@@ -950,12 +950,52 @@ select sum(age) from user;
  
 
 
+#### 100万数据单机插入需要多长时间？
+    5个线程，一个线程10000循环添加，跑了2021-08-01 02:11:57 - 2021-08-01 01:55:04 = 17分钟
+    1000000 / 17 = 58823条/ 分钟 = 908条/秒
 
+#### 表结构
+```sql
+create table bigData
+(
+    id         bigint auto_increment,
+    detail     varchar(255)  null,
+    createtime datetime      null,
+    validity   int default 0 null,
+    constraint idx_bigData_id
+        unique (id)
+);
+```
 
+#### 100万数据查询
+    不走索引大概一条数据是0.2秒查询一条数据
 
+#### 800万数据非索引查询
+    不走索引大概一条数据是2.2秒查询一条数据
+    走一般索引大概需要0。002秒
 
+#### 查看索引的大小
+```sql
+select
+database_name,
+table_name,
+index_name,
+CONCAT(round((stat_value*@@innodb_page_size)/1024/1024, 2),'MB') SizeMB,
+round(((100/(SELECT INDEX_LENGTH FROM INFORMATION_SCHEMA.TABLES t WHERE t.TABLE_NAME = iis.table_name and t.TABLE_SCHEMA = iis.database_name))*(stat_value*@@innodb_page_size)), 2) `Percentage`
+from mysql.innodb_index_stats iis
+where stat_name='size'
 
+and table_name = 'bigdata'
+and database_name = 'cas';
+```
 
+#### 查看表占空间大小【不准】
+```sql
+select concat(round(sum(data_length/1024/1024),2),'MB') as data 
+from tables where table_schema='cas' and table_name='bigdata';
+```
 
-
+#### 800万数据group by 非索引字段
+    分组非索引字段耗时3.02秒
+    
 

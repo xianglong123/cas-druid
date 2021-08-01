@@ -42,8 +42,6 @@ public class StatController {
             return "name 不能为空";
         }
         testSqlSession();
-//        User user = userMapper.queryByName(name);
-//        return user.getName();
         return "ok";
     }
 
@@ -82,5 +80,8 @@ public class StatController {
         Account account = accountMapper.queryById(userId);
         return account.getId();
     }
+
+
+
 
 }

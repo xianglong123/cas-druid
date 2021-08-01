@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @review:
  */
 @Import({DynamicDataSourceConfig.class})
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class }, scanBasePackages = "com.cas")
 @MapperScan(basePackages = "com.cas.dao")
 public class DruidApplication {
 

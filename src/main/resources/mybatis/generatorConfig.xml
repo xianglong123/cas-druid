@@ -38,7 +38,7 @@
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/cas"
                         userId="root"
-                        password="123456">
+                        password="12345678">
         </jdbcConnection>
 
         <!--类处理器-->
@@ -64,7 +64,7 @@
             <property name="rootInterface" value="com.cas.mybatis.mapper.BaseMapper"/>
         </javaClientGenerator>
 
-        <table tableName="t5" domainObjectName="T5DO" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="goods" domainObjectName="T5DO" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
         </table>
     </context>
