@@ -12,5 +12,6 @@ public interface BigDataMapper {
 
     int add(BigData bigData);
 
+    BigData queryById(Integer id);
 
 }

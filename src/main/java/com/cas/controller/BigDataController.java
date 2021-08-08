@@ -23,9 +23,12 @@ public class BigDataController {
     public String add() {
         bigDataService.add();
         return "已完成";
-
     }
 
-
+    @GetMapping("/queryById")
+    public String queryById(String id) {
+        bigDataService.queryById(id);
+        return "已完成";
+    }
 
 }

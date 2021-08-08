@@ -17,6 +17,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
@@ -26,6 +27,7 @@ import java.util.Properties;
  * @version: V1.0
  * @review: mybatis拦截器
  */
+@Component
 @Intercepts(
         {
                 @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),

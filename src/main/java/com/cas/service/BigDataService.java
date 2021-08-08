@@ -10,4 +10,6 @@ public interface BigDataService {
 
     void add();
 
+    void queryById(String id);
+
 }

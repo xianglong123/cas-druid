@@ -14,6 +14,15 @@ public class BigData {
     private Date createtime;
     private Integer validity;
 
+    public BigData() {
+    }
+
+    public BigData(String detail, Date createtime, Integer validity) {
+        this.detail = detail;
+        this.createtime = createtime;
+        this.validity = validity;
+    }
+
     public BigData(String detail, Integer validity) {
         this.detail = detail;
         this.validity = validity;
@@ -41,5 +50,14 @@ public class BigData {
 
     public void setValidity(Integer validity) {
         this.validity = validity;
+    }
+
+    @Override
+    public String toString() {
+        return "BigData{" +
+                "detail='" + detail + '\'' +
+                ", createtime=" + createtime +
+                ", validity=" + validity +
+                '}';
     }
 }

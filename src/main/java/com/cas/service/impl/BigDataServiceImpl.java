@@ -32,22 +32,24 @@ public class BigDataServiceImpl implements BigDataService {
     @Override
     public void add() {
         threadPoolUtil.execute(() -> {
-            for (int i = 0; i < 700; i++) {
+            for (int i = 0; i < 1; i++) {
                 add10000();
             }
         });
     }
 
-
     private void add10000() {
         int count = 0;
-        for (int i = 0; i <= 10000; i ++) {
+        for (int i = 0; i <= 1; i ++) {
             int res = bigDataMapper.add(new BigData(StringUtil.getTel(), StringUtil.getOneNum()));
             count += res;
         }
         log.info("已完成" + count + " 条数据添加");
     }
 
-
-
+    @Override
+    public void queryById(String id) {
+        BigData bigData = bigDataMapper.queryById(Integer.valueOf(id));
+        log.info(bigData.toString());
+    }
 }

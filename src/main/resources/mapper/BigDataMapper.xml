@@ -34,6 +34,12 @@
         </trim>
     </insert>
 
+    <select id="queryById" resultMap="result">
+        select
+        <include refid="columns"/>
+        from bigData
+        where id = #{id}
+    </select>
 
 </mapper>
 

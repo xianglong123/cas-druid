@@ -63,11 +63,11 @@ spring:
       password-callback-class-name: com.cas.config.DbPasswordCallback
 mybatis:
   #配置mapper xml文件所在的路径
-  mapper-locations: classpath:com.cas.dao/*.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
   #Mybais 扫描别名包， 和注解@Alias联用
   type-aliases-package: com.cas.bean
   #  配置typeHandler 的扫描包
-  # typeHandler-handlers-package: com.cas.typeHandler
+  type-handlers-package: com.cas.config.typeHandler
   configuration:
     map-underscore-to-camel-case: true
     # 三种执行模式，simple,reuse,batch
@@ -75,3 +75,5 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    interceptors: com.cas.config.interceptor.MybatisInterceptor
     object-factory: com.cas.config.factory.MyObjectFactory
+
+
