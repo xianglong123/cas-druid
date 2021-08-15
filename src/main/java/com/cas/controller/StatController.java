@@ -1,5 +1,8 @@
 package com.cas.controller;
 
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.cas.bean.Account;
 import com.cas.bean.User;
@@ -12,8 +15,16 @@ import com.cas.service.UdiActuator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author: xianglong[1391086179@qq.com]
@@ -54,6 +65,7 @@ public class StatController {
 
     /**
      * 测试二级缓存
+     *
      * @param name
      */
     private void testCache2(String name) {
@@ -82,6 +94,19 @@ public class StatController {
     }
 
 
+    @GetMapping("export")
+    public void export(HttpServletResponse response) throws IOException {
+        String url = "http://localhost:8088/export";
+        LocalDate today = LocalDate.now();
+        String name = today.minus(1, ChronoUnit.WEEKS).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "-" +today.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+                + "-Dial_Test";
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + name + ".xlsx");
+        HttpResponse execute = HttpRequest.get(url).execute();
+        ServletOutputStream out = response.getOutputStream();
+        out.write(execute.bodyBytes());
+    }
 
 
 }
