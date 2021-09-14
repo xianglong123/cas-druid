@@ -998,4 +998,17 @@ from tables where table_schema='cas' and table_name='bigdata';
 #### 800万数据group by 非索引字段
     分组非索引字段耗时3.02秒
     
+#### mysql 开启慢查询日志
+    show variables like "%slow%";
+
+#### 重启mysql[MAC 无用]
+    1、启动mysql
+    
+    sudo /usr/local/mysql/support-files/mysql.server start
+    2、停止mysql
+    
+    sudo /usr/local/mysql/support-files/mysql.server stop
+    3、重启mysql
+    
+    sudo /usr/local/mysql/support-files/mysql.server restart
 
