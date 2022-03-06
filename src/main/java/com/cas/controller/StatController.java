@@ -2,19 +2,15 @@ package com.cas.controller;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
 import com.alibaba.druid.util.StringUtils;
-import com.cas.bean.Account;
 import com.cas.bean.User;
-import com.cas.config.dynamic.CommonConstant;
-import com.cas.config.dynamic.TargetDataSource;
 import com.cas.config.aop.LogHistory;
+import com.cas.config.dynamic.TargetDataSource;
 import com.cas.dao.AccountMapper;
 import com.cas.dao.UserMapper;
 import com.cas.service.UdiActuator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,9 +33,6 @@ public class StatController {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private AccountMapper accountMapper;
 
     @Autowired
     private UdiActuator udiActuator;
@@ -81,18 +74,6 @@ public class StatController {
     public String updateAge() {
         return String.valueOf(userMapper.updateAge());
     }
-
-    @RequestMapping("/queryByUserId")
-    @ResponseBody
-    @TargetDataSource(value = CommonConstant.SLAVE_DATASOURCE)
-    public String queryById(String userId) {
-        if (StringUtils.isEmpty(userId)) {
-            return "name 不能为空";
-        }
-        Account account = accountMapper.queryById(userId);
-        return account.getId();
-    }
-
 
     @GetMapping("export")
     public void export(HttpServletResponse response) throws IOException {

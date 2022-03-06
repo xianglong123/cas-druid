@@ -1,18 +1,14 @@
 package com.cas.service.impl;
 
 import com.cas.bean.User;
-import com.cas.config.dynamic.DataSourceAspect;
 import com.cas.dao.UserMapper;
 import com.cas.service.UdiActuator;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
