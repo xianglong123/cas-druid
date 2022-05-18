@@ -5,7 +5,7 @@ server:
 spring:
   main:
     # 如果有两个重复的bean被加载到容器内，允许第二个覆盖第一个，默认false
-    allow-bean-definition-overriding: true
+    allow-bean-definition-overriding: false
   datasource:
     master:
       username: root
@@ -61,6 +61,35 @@ spring:
       aop-patterns: com.cas.*
       # 监控页面访问地址：http://localhost:8085/druid/
       password-callback-class-name: com.cas.config.DbPasswordCallback
+  redis:
+    timeout: 2000
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+  rabbitmq:
+    host: 127.0.0.1 # 用户名
+    port: 5672      # port
+    username: guest # 用户名
+    password: guest # 密码
+    virtual-host: / # 指定连接到broker的Virtual host.
+    # NONE值是禁用发布确认模式，是默认值
+    # CORRELATED值是发布消息成功到交换器后会触发回调方法，如1示例
+    # SIMPLE值经测试有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果返回false则会关闭channel，则接下来无法发送消息到broker;
+    publisher-confirm-type: none # 发布确认属性配置
+    # publisher-confirms: true # springboot版本低用下面这个，版本高用上面这个
+    publisher-returns: false # 确认消息已发送到队列(Queue) 开启发送失败退回
+    dynamic: false # 是否创建AmqpAdmin bean. 默认为: true)
+    addresses: # 指定client连接到的server的地址，多个以逗号分隔.
+    connection-timeout: 0 # 连接超时时间，单位毫秒，0表示永不超时
+    listener:
+      simple:
+        retry:
+          enabled: true # 开启消费者进行重试
+          max-attempts: 5 # 最大重试次数
+          initial-interval: 3000 # 重试时间间隔
+  aop:
+    proxy-target-class: true
+    auto: true
 mybatis:
   #配置mapper xml文件所在的路径
   mapper-locations: classpath:mapper/*Mapper.xml

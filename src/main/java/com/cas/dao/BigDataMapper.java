@@ -1,6 +1,9 @@
 package com.cas.dao;
 
+import com.cas.aspect.QueryCache;
+import com.cas.aspect.UpdateResetCache;
 import com.cas.bean.BigData;
+import com.cas.enums.CacheEnum;
 
 /**
  * @author xiang_long
@@ -13,5 +16,8 @@ public interface BigDataMapper {
     int add(BigData bigData);
 
     BigData queryById(Integer id);
+
+    @UpdateResetCache(CacheEnum.BIG_DATA)
+    int update(BigData bigData);
 
 }

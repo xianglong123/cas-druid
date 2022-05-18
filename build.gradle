@@ -26,7 +26,13 @@ dependencies {
     implementation("cn.hutool:hutool-all:5.7.7")
 
     implementation 'org.mybatis.generator:mybatis-generator-core:1.3.5'
-    testImplementation 'mysql:mysql-connector-java:8.0.13'
+    implementation 'mysql:mysql-connector-java:8.0.13'
+
+    implementation 'com.alibaba:fastjson:1.2.61'
+    // rabbitmq
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    /*redis*/
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.0.3.RELEASE'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

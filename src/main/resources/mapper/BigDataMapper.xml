@@ -41,5 +41,19 @@
         where id = #{id}
     </select>
 
+
+    <update id="update" parameterType="com.cas.bean.BigData">
+        update bigData
+        <set >
+            <if test="detail != null" >
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="validity != null" >
+                validity = #{validity,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>
 

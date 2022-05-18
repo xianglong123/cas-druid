@@ -1,5 +1,6 @@
 package com.cas.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,9 @@ import java.util.Date;
  * @date 2021/8/1 1:13 上午
  * @desc
  */
-public class BigData {
+public class BigData implements Serializable {
 
+    private int id;
     private String detail;
     private Date createtime;
     private Integer validity;
@@ -17,13 +19,13 @@ public class BigData {
     public BigData() {
     }
 
-    public BigData(String detail, Date createtime, Integer validity) {
+    public BigData(String detail, Integer validity) {
         this.detail = detail;
-        this.createtime = createtime;
         this.validity = validity;
     }
 
-    public BigData(String detail, Integer validity) {
+    public BigData(int id, String detail, Integer validity) {
+        this.id = id;
         this.detail = detail;
         this.validity = validity;
     }

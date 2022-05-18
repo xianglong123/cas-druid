@@ -1,5 +1,7 @@
 package com.cas.service;
 
+import com.cas.bean.BigData;
+
 /**
  * @author xiang_long
  * @version 1.0
@@ -10,6 +12,7 @@ public interface BigDataService {
 
     void add();
 
-    void queryById(String id);
+    BigData queryById(String id);
 
+    void update(int id);
 }

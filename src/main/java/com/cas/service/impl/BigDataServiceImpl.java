@@ -48,8 +48,16 @@ public class BigDataServiceImpl implements BigDataService {
     }
 
     @Override
-    public void queryById(String id) {
+    public BigData queryById(String id) {
         BigData bigData = bigDataMapper.queryById(Integer.valueOf(id));
-        log.info(bigData.toString());
+        log.info("==============从DB中获取数据，【{}】", bigData.toString());
+        return bigData;
     }
+
+    @Override
+    public void update(int id) {
+        int update = bigDataMapper.update(new BigData(id, "15811317734", 6));
+        log.info("==============已修改, count=[{}]", update);
+    }
+
 }
