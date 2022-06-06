@@ -5,7 +5,9 @@ import com.cas.config.dynamic.DataSourceAspect;
 import com.cas.config.dynamic.DynamicDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
+import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.Interceptor;
@@ -27,11 +29,13 @@ import java.util.Properties;
  * @version: V1.0
  * @review: mybatis拦截器
  */
-@Component
+//@Component
 @Intercepts(
         {
                 @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),
                 @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+                @Signature(type = StatementHandler.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+                @Signature(type = ParameterHandler.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
         })
 public class MybatisInterceptor implements Interceptor {
     private static final Logger log = LoggerFactory.getLogger(MybatisInterceptor.class);
@@ -67,7 +71,8 @@ public class MybatisInterceptor implements Interceptor {
     @Override
     public Object plugin(Object target) {
         // 当目标类是StatementHandler类型时，才包装目标类，否者直接返回目标本身，减少目标被代理的次数。
-        return (target instanceof RoutingStatementHandler) ? Plugin.wrap(target, this) : target;
+//        return (target instanceof RoutingStatementHandler) ? Plugin.wrap(target, this) : target;
+        return Plugin.wrap(target, this);
     }
 
     @Override

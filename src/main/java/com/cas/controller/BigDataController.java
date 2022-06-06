@@ -36,7 +36,7 @@ public class BigDataController {
     }
 
     @PostMapping("/queryById")
-    @QueryCache(CacheEnum.BIG_DATA)
+//    @QueryCache(CacheEnum.BIG_DATA)
     public BigData queryById(requestDTO requestDTO) {
         return bigDataService.queryById(requestDTO.getId());
     }
@@ -45,6 +45,12 @@ public class BigDataController {
     public String update(int id) {
         bigDataService.update(id);
         return "update已完成";
+    }
+
+    @PostMapping("/queryCallable")
+//    @QueryCache(CacheEnum.BIG_DATA)
+    public BigData queryCallable() {
+        return bigDataService.queryByProcedure();
     }
 
 

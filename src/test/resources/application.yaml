@@ -105,5 +105,6 @@ mybatis:
     interceptors:
 #      - com.cas.config.interceptor.MybatisInterceptor
     object-factory: com.cas.config.factory.MyObjectFactory
+
 logging:
   config: classpath:logback-spring.xml

@@ -25,7 +25,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="detail != null">
-                #{detail,jdbcType=CHAR},
+                #{detail,jdbcType=CHAR, typeHandler=com.cas.config.typeHandler.CasTypeHandler},
             </if>
             <if test="validity != null">
                 #{validity,jdbcType=CHAR},
@@ -39,6 +39,11 @@
         <include refid="columns"/>
         from bigData
         where id = #{id}
+    </select>
+
+    <!-- 调用执行计划 -->
+    <select id="queryByProcedure" resultMap="result" statementType="CALLABLE">
+        {call test_cas()}
     </select>
 
 

@@ -1,4 +1,4 @@
-package com.cas;
+package com.cas.other;
 
 import com.cas.bean.User;
 import org.apache.ibatis.annotations.Select;

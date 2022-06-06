@@ -1,6 +1,8 @@
 package com.cas.bean;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: xianglong[1391086179@qq.com]
@@ -28,10 +30,27 @@ public class User {
     private int age;
     private String email;
     private int version;
+    private Detail detail;
     private int deleted;
+    private Map<String, Object> map = new HashMap<>();
     private Date createTime;
     private Date updateTime;
 
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Detail detail) {
+        this.detail = detail;
+    }
+
+    public Map<String, Object> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
+    }
 
     public String getId() {
         return id;

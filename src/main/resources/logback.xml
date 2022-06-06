@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--debug="false"关闭logback内部监控 -->
+<configuration debug="false">
+    <!-- 请不要删除此文件，为了覆盖依赖jar包中的logback.xml -->
+</configuration>

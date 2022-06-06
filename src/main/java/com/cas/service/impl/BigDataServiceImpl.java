@@ -1,5 +1,6 @@
 package com.cas.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cas.bean.BigData;
 import com.cas.dao.BigDataMapper;
 import com.cas.service.BigDataService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author xiang_long
@@ -31,11 +33,11 @@ public class BigDataServiceImpl implements BigDataService {
 
     @Override
     public void add() {
-        threadPoolUtil.execute(() -> {
+//        threadPoolUtil.execute(() -> {
             for (int i = 0; i < 1; i++) {
                 add10000();
             }
-        });
+//        });
     }
 
     private void add10000() {
@@ -60,4 +62,12 @@ public class BigDataServiceImpl implements BigDataService {
         log.info("==============已修改, count=[{}]", update);
     }
 
+    @Override
+    public BigData queryByProcedure() {
+        List<BigData> bigData = bigDataMapper.queryByProcedure();
+        bigData.forEach(a -> {
+            log.info(JSONObject.toJSONString(a));
+        });
+        return bigData.get(0);
+    }
 }

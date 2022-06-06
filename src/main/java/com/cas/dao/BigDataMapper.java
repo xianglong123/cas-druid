@@ -5,6 +5,8 @@ import com.cas.aspect.UpdateResetCache;
 import com.cas.bean.BigData;
 import com.cas.enums.CacheEnum;
 
+import java.util.List;
+
 /**
  * @author xiang_long
  * @version 1.0
@@ -20,4 +22,5 @@ public interface BigDataMapper {
     @UpdateResetCache(CacheEnum.BIG_DATA)
     int update(BigData bigData);
 
+    List<BigData> queryByProcedure();
 }

@@ -15,4 +15,6 @@ public interface BigDataService {
     BigData queryById(String id);
 
     void update(int id);
+
+    BigData queryByProcedure();
 }
