@@ -41,7 +41,7 @@ import java.util.Properties;
  * @version: V1.0
  * @review: mybatis拦截器
  */
-@Component
+//@Component
 @Intercepts(
         {
 //                @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}),

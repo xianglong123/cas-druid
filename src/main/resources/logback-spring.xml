@@ -69,7 +69,7 @@
 		<appender-ref ref="INFO" />
 	</logger>
 
-	<springProfile name="default,test">
+	<springProfile name="default,test,uat">
 		<logger name="com.cas.dao.mapper" level="TRACE">
 		</logger>
 
@@ -78,10 +78,11 @@
 		</logger>
 
 		<root level="INFO">
+			<appender-ref ref="STDOUT" />
 			<appender-ref ref="INFO" />
 		</root>
 	</springProfile>
-	<springProfile name="prod,dev,default">
+	<springProfile name="prod,dev,default,uat">
 		<root level="INFO">
 			<appender-ref ref="STDOUT" />
 			<appender-ref ref="INFO" />

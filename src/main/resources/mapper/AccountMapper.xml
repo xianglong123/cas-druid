@@ -21,6 +21,34 @@
         where user_id = #{userId}
     </select>
 
+    <select id="queryById2" resultType="com.cas.bean.Account">
+        select
+        <include refid="columns"/>
+        from account
+        <where>
+            <if test="userId != ''">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByIds" resultType="com.cas.bean.Account" flushCache="true">
+        select
+        <include refid="columns"/>
+        from account
+        where id in
+        <foreach collection="list" separator="," item="item" open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="find" resultType="com.cas.bean.Account" flushCache="true">
+        select
+        <include refid="columns"/>
+        from account
+    </select>
+
 
 </mapper>
 

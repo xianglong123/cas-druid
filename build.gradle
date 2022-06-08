@@ -14,6 +14,7 @@ repositories {
     maven {
         url 'https://maven.aliyun.com/repository/public/'
     }
+    mavenLocal()
     mavenCentral()
 }
 
@@ -33,6 +34,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     /*redis*/
     implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.0.3.RELEASE'
+    // 本地
+    implementation 'com.cas:mybatis-pagination:0.0.8-SNAPSHOT'
+    implementation 'com.cas:mybatis-desensitization:0.0.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -78,5 +78,12 @@ mybatis:
 #    local-cache-scope: session
     # 禁用二级缓存
     cache-enabled: true
-
-
+logging:
+  config: classpath:logback-spring.xml
+cas:
+  mybatis-pagination:
+    ## 是否开启分页插件
+    enable: true
+  desensitize:
+    ## 是否开启加解密插件
+    enable: true

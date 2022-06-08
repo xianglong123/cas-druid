@@ -21,8 +21,8 @@ import static com.cas.config.mq.RabbitConfig.DICP_COMMAND_DELETE_CACHE;
  * @date 2022/4/12 10:36 上午
  * @desc 延迟双删消费者
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class DeleteCacheConsumer {
     private static final Logger log = LoggerFactory.getLogger(DeleteCacheConsumer.class);
 

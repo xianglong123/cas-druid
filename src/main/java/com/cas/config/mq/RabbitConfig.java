@@ -21,7 +21,7 @@ import java.util.Map;
  * @date 2021/12/13 9:43 上午
  * @desc 涉及队列
  */
-@Configuration
+//@Configuration
 public class RabbitConfig {
 
 

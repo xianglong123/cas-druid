@@ -1,7 +1,10 @@
 package com.cas.dao;
 
 import com.cas.bean.Account;
+import com.cas.bean.AccountPage;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author: xianglong[1391086179@qq.com]
@@ -13,5 +16,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AccountMapper {
 
     Account queryById(String userId);
+
+    Account queryById2(Account account);
+
+    List<Account> findByIds(List<String> list);
+
+    List<Account> find(AccountPage account);
 
 }

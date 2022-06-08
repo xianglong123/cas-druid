@@ -1,8 +1,5 @@
 package com.cas.bean;
 
-import com.cas.annotation.Confidential;
-import com.cas.annotation.ConfidentialType;
-
 import java.util.Date;
 
 /**
@@ -22,11 +19,9 @@ import java.util.Date;
  * )
  *     comment '账户余额表' collate = utf8mb4_bin;
  */
-@ConfidentialType
-public class Account {
+public class AccountPage extends PageWrapper{
 
     private String id;
-    @Confidential
     private String userId;
     private Float balance;
     private Float freezeAmount;

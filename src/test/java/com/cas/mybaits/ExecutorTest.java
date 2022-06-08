@@ -2,7 +2,9 @@ package com.cas.mybaits;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.cas.BaseTest;
+import com.cas.bean.Account;
 import com.cas.bean.BigData;
+import com.cas.bean.User;
 import com.cas.dao.BigDataMapper;
 import org.apache.ibatis.executor.BatchExecutor;
 import org.apache.ibatis.executor.CachingExecutor;
@@ -10,6 +12,10 @@ import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.ReuseExecutor;
 import org.apache.ibatis.executor.SimpleExecutor;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.scripting.xmltags.DynamicContext;
+import org.apache.ibatis.scripting.xmltags.IfSqlNode;
+import org.apache.ibatis.scripting.xmltags.StaticTextSqlNode;
+import org.apache.ibatis.scripting.xmltags.WhereSqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
@@ -27,6 +33,7 @@ import javax.annotation.Resource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,5 +171,32 @@ public class ExecutorTest extends BaseTest {
         sqlSession.select("com.cas.dao.BigDataMapper.queryById", 1,handler);
         System.out.println(list.size());
     }
+
+    @Test
+    public void ifTest() {
+        Account account = new Account();
+        account.setId("1");
+        DynamicContext context = new DynamicContext(configuration, account);
+
+        // 静态节点逻辑
+        new StaticTextSqlNode("select * from account ").apply(context);
+
+        // where
+        IfSqlNode ifSqlNode = new IfSqlNode(new StaticTextSqlNode(" and id=#{id}"), "id!=null");
+
+        WhereSqlNode where = new WhereSqlNode(configuration, ifSqlNode);
+        // 添加where逻辑
+        where.apply(context);
+
+        System.out.println(context.getSql());
+    }
+
+    @Test
+    public void foreachTest() {
+        HashMap<Object, Object> parameter = new HashMap<>();
+        parameter.put("list", Arrays.asList("1", "2"));
+        sqlSessionFactory.openSession().selectList("findByIds", parameter);
+    }
+
 
 }
