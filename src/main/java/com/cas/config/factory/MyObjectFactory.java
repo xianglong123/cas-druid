@@ -13,8 +13,7 @@ import java.util.Properties;
 /**
  * @author xianglong
  */
-@Configuration
-@Component
+//@Configuration
 public class MyObjectFactory extends DefaultObjectFactory {
     private static final Logger log = LoggerFactory.getLogger(MyObjectFactory.class);
     private static final long serialVersionUID = -4293520460481008255L;

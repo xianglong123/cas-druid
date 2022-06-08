@@ -73,7 +73,7 @@ mybatis:
     default-executor-type: simple
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    interceptors: com.cas.config.interceptor.MybatisInterceptor
-    object-factory: com.cas.config.factory.MyObjectFactory
+#    object-factory: com.cas.config.factory.MyObjectFactory
     # 一级缓存生命周期
 #    local-cache-scope: session
     # 禁用二级缓存

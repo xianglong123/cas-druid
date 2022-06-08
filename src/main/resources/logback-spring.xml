@@ -10,12 +10,12 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-			<pattern>%date{yyyy-MM-dd HH:mm:ss} | %X{trace_uuid} |%highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger) | %msg%n</pattern>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} | %X{trace_uuid} |%highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger{40}) | %msg%n</pattern>
 		</encoder>
 	</appender>
 
 	<!-- info日志 appender  -->
-	<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="ROOT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 按天回滚 daily -->
 			<fileNamePattern>${log_dir}/%d{yyyyMMdd,aux}/server.%d{yyyyMMddHH}%i.log</fileNamePattern>
@@ -64,28 +64,28 @@
 
 	<!--mybatis sql日志 日志的级别需要是DEBUG-->
 	<!--日志打印的包的范围，及分类日志文件存储 -->
-	<logger name="com.alibaba.dubbo" level="warn">
-		<appender-ref ref="ERROR" />
-		<appender-ref ref="INFO" />
-	</logger>
+<!--	<logger name="com.alibaba.dubbo" level="warn">-->
+<!--		<appender-ref ref="ERROR" />-->
+<!--		<appender-ref ref="INFO" />-->
+<!--	</logger>-->
 
 	<springProfile name="default,test,uat">
 		<logger name="com.cas.dao.mapper" level="TRACE">
 		</logger>
 
-		<logger name="com.cas" level="INFO">
-			<appender-ref ref="INFO" />
+		<logger name="com.cas" level="INFO" addtivity="false">
+			<appender-ref ref="ROOT-APPENDER" />
 		</logger>
 
 		<root level="INFO">
 			<appender-ref ref="STDOUT" />
-			<appender-ref ref="INFO" />
+			<appender-ref ref="ROOT-APPENDER" />
 		</root>
 	</springProfile>
-	<springProfile name="prod,dev,default,uat">
+	<springProfile name="dev,default,uat">
 		<root level="INFO">
 			<appender-ref ref="STDOUT" />
-			<appender-ref ref="INFO" />
+			<appender-ref ref="ROOT-APPENDER" />
 			<appender-ref ref="ERROR" />
 		</root>
 	</springProfile>
