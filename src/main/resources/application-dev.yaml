@@ -1,5 +1,5 @@
 druid:
-  password: t3k1+w/mOlHCGdOnAd3xow==
+  password: Qjh5mZNppQUhmB8/KxRqcg==
 server:
   port: 8086
 spring:
@@ -9,12 +9,12 @@ spring:
   datasource:
     master:
       username: root
-      password: 12345678
+      password: "******"
       url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     slave:
       username: root
-      password: 12345678
+      password: "******"
       url: jdbc:mysql://localhost:3306/cas?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
       driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
@@ -58,7 +58,7 @@ spring:
 #        deny: 127.0.0.1
 
       # spring监控，对内部各接口调用的监控
-      aop-patterns: com.cas.*
+#      aop-patterns: com.cas.*
       # 监控页面访问地址：http://localhost:8085/druid/
       password-callback-class-name: com.cas.config.DbPasswordCallback
   redis:

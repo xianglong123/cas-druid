@@ -26,7 +26,7 @@ import java.util.Date;
 public class Account {
 
     private String id;
-    @Confidential
+    @Confidential(value = true, max = 20, regular = "^\\d{1,10}$")
     private String userId;
     private Float balance;
     private Float freezeAmount;

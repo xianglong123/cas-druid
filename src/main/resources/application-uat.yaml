@@ -1,5 +1,5 @@
 druid:
-  password: t3k1+w/mOlHCGdOnAd3xow==
+  password: Qjh5mZNppQUhmB8/KxRqcg==
 server:
   port: 8086
 spring:
@@ -58,7 +58,7 @@ spring:
 #        deny: 127.0.0.1
 
       # spring监控，对内部各接口调用的监控
-      aop-patterns: com.cas.*
+#      aop-patterns: com.cas.*
       # 监控页面访问地址：http://localhost:8085/druid/
 mybatis:
   #配置mapper xml文件所在的路径
