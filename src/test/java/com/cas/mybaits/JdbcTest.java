@@ -3,6 +3,7 @@ package com.cas.mybaits;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -17,15 +18,23 @@ public class JdbcTest {
     private static final String USER = "root";
     private static final String PASSWORD = "12345678";
 
-    public static void main(String[] args) throws Exception{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        Statement stmt = conn.createStatement();
-
-        ResultSet rs = stmt.executeQuery("select * from goods where id='100'");
-        while (rs.next()) {
-            System.out.println(rs.getInt("surplus"));
+    public static void main(String[] args) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from goods where id='100'");
+            Object object = rs.getObject(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+            stmt.close();
         }
+
+
 
     }
 

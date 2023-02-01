@@ -1012,3 +1012,9 @@ from tables where table_schema='cas' and table_name='bigdata';
     
     sudo /usr/local/mysql/support-files/mysql.server restart
 
+
+### 获取分区之后第一排数据
+    row_number() 这个排序函数的特点是相同数据,先查出的排名在前,没有重复值
+
+
+
