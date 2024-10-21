@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface AccountMapper {
 
-    Account queryById(String userId);
+    Account queryById(String userId);;
 
     Account queryById2(Account account);
 
